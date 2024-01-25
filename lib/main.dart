@@ -57,22 +57,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Duration duration = const Duration(seconds: 1);
+  Stopwatch? stopwatch;
   Timer? t;
+  IconData? icon;
 
   @override
   void initState() {
     super.initState();
 
+    stopwatch = Stopwatch();
+    icon = Icons.play_arrow;
     startTimer();
   }
 
+  void handleStartStop() {
+    if (stopwatch!.isRunning) {
+      stopwatch!.stop();
+      icon = Icons.play_arrow;
+    } else {
+      stopwatch!.start();
+      icon = Icons.pause;
+    }
+  }
+
   void startTimer() {
-    t = Timer.periodic(duration, (timer) {
-      setState(() {
-        duration = Duration(seconds: duration.inSeconds + 1);
-      });
+    t = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      setState(() {});
     });
+  }
+
+  String returnFormattedText() {
+    var milli = stopwatch!.elapsed.inMilliseconds;
+
+    String milliseconds = (milli % 1000)
+        .toString()
+        .padLeft(3, "0"); // this one for the miliseconds
+    String seconds = ((milli ~/ 1000) % 60)
+        .toString()
+        .padLeft(2, "0"); // this is for the second
+    String minutes = ((milli ~/ 1000) ~/ 60)
+        .toString()
+        .padLeft(2, "0"); // this is for the minute
+
+    return "$minutes:$seconds:$milliseconds";
   }
 
   @override
@@ -86,18 +113,44 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Clock',
+            Container(
+              height: 250,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape
+                    .circle, // this one is use for make the circle on ui.
+                border: Border.all(
+                  color: Color(0xff0395eb),
+                  width: 4,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    returnFormattedText(),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        onPressed: handleStartStop,
+                        tooltip: 'StartStop',
+                        child: Icon(icon),
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          stopwatch!.reset();
+                        },
+                        tooltip: 'reset',
+                        child: const Icon(Icons.restore),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            Text(
-              '${duration.inSeconds}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            // FloatingActionButton(
-            //   onPressed: initState,
-            //   tooltip: 'Increment',
-            //   child: const Icon(Icons.play_arrow),
-            // ),
           ],
         ),
       ),
