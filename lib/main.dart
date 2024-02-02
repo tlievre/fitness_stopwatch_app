@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     stopwatch = Stopwatch();
     icon = Icons.play_arrow;
-    startTimer();
+    _startTimer();
   }
 
   void handleStartStop() {
@@ -80,26 +80,30 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void startTimer() {
+  void _startTimer() {
     t = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      setState(() {});
+      setState(() {
+        // This callback function check when the timer arrived to its end
+        if (stopwatch!.elapsed.inSeconds >= 10) {
+          stopwatch!.stop();
+          stopwatch!.reset();
+        }
+      });
     });
   }
 
   String returnFormattedText() {
+    var minuteur = 9;
     var milli = stopwatch!.elapsed.inMilliseconds;
 
-    String milliseconds = (milli % 1000)
+    String milliseconds = (1000 - (milli % 1000))
         .toString()
         .padLeft(3, "0"); // this one for the miliseconds
-    String seconds = ((milli ~/ 1000) % 60)
+    String seconds = (minuteur - ((milli ~/ 1000) % 60))
         .toString()
         .padLeft(2, "0"); // this is for the second
-    String minutes = ((milli ~/ 1000) ~/ 60)
-        .toString()
-        .padLeft(2, "0"); // this is for the minute
 
-    return "$minutes:$seconds:$milliseconds";
+    return "$seconds:$milliseconds";
   }
 
   @override
