@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 27, 38, 73)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Fitness stopwatch app'),
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer? t;
   IconData? icon;
 
-  final chosenMinutes = 1;
+  final chosenMinutes = 2;
   final chosenSeconds = 5;
 
   @override
@@ -89,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // This callback function check when the timer arrived to its end
         if (stopwatch!.elapsed.inSeconds >=
             (chosenMinutes * 60 + chosenSeconds)) {
-          stopwatch!.stop();
+          handleStartStop();
           stopwatch!.reset();
         }
       });
@@ -98,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String returnFormattedText() {
     var milli = stopwatch!.elapsed.inMilliseconds;
+    var sec = stopwatch!.elapsed.inSeconds;
 
     String milliseconds = (-(milli % 1000) % 1000)
         .toString()
@@ -105,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String seconds = ((chosenSeconds - (milli ~/ 1000)) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
-    String minutes = ((chosenMinutes - (milli ~/ 60000)) % 60)
+    String minutes = ((chosenMinutes * 60 + chosenSeconds - sec) ~/ 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
 
