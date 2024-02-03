@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Fitness stopwatch app'),
     );
   }
 }
@@ -61,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer? t;
   IconData? icon;
 
+  final chosenMinutes = 1;
+  final chosenSeconds = 5;
+
   @override
   void initState() {
     super.initState();
@@ -84,7 +87,8 @@ class _MyHomePageState extends State<MyHomePage> {
     t = Timer.periodic(const Duration(milliseconds: 30), (timer) {
       setState(() {
         // This callback function check when the timer arrived to its end
-        if (stopwatch!.elapsed.inSeconds >= 10) {
+        if (stopwatch!.elapsed.inSeconds >=
+            (chosenMinutes * 60 + chosenSeconds)) {
           stopwatch!.stop();
           stopwatch!.reset();
         }
@@ -93,17 +97,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   String returnFormattedText() {
-    var minuteur = 9;
     var milli = stopwatch!.elapsed.inMilliseconds;
 
-    String milliseconds = (1000 - (milli % 1000))
+    String milliseconds = (-(milli % 1000) % 1000)
         .toString()
         .padLeft(3, "0"); // this one for the miliseconds
-    String seconds = (minuteur - ((milli ~/ 1000) % 60))
+    String seconds = ((chosenSeconds - (milli ~/ 1000)) % 60)
+        .toString()
+        .padLeft(2, "0"); // this is for the second
+    String minutes = ((chosenMinutes - (milli ~/ 60000)) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
 
-    return "$seconds:$milliseconds";
+    return "$minutes:$seconds:$milliseconds";
   }
 
   @override
@@ -124,8 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 shape: BoxShape
                     .circle, // this one is use for make the circle on ui.
                 border: Border.all(
-                  color: Color(0xff0395eb),
-                  width: 4,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
               ),
               child: Column(
@@ -145,6 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       FloatingActionButton(
                         onPressed: () {
+                          handleStartStop();
                           stopwatch!.reset();
                         },
                         tooltip: 'reset',
@@ -155,9 +161,42 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SavedTimerButton(timer: "2:00"),
+                SavedTimerButton(timer: "1:30"),
+                SavedTimerButton(timer: "0:30")
+              ],
+            )
           ],
         ),
       ),
     );
+  }
+}
+
+class SavedTimerButton extends StatelessWidget {
+  const SavedTimerButton({
+    super.key,
+    required this.timer,
+  });
+  final String timer;
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onSecondary,
+    );
+    return Card(
+        color: theme.colorScheme.secondary,
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            timer,
+            style: style,
+          ),
+        ));
   }
 }
