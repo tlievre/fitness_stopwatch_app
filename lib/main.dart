@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Fitness Stopwatch App',
       theme: ThemeData(
         colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 27, 38, 73)),
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 48, 49, 53)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Fitness stopwatch app'),
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   IconData? icon;
 
   var chosenMinutes = 2;
-  var chosenSeconds = 5;
+  var chosenSeconds = 0;
 
   @override
   void initState() {
@@ -123,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     .circle, // this one is use for make the circle on ui.
                 border: Border.all(
                   color: Theme.of(context).colorScheme.inversePrimary,
+                  width: 5,
                 ),
               ),
               child: Column(
@@ -158,21 +159,21 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    setTimer(1, 15);
+                  },
+                  child: Text("1:15"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
                     setTimer(1, 30);
                   },
                   child: Text("1:30"),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    setTimer(2, 0);
+                    setTimer(2, 00);
                   },
-                  child: Text("2:0"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setTimer(1, 45);
-                  },
-                  child: Text("1:45"),
+                  child: Text("2:00"),
                 ),
               ],
             )

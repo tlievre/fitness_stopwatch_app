@@ -1,6 +1,7 @@
 # fitness_stopwatch_app
 
-A new Flutter project.
+Fitness Stopwatch mobile application.
+
 
 ## Getting Started
 
