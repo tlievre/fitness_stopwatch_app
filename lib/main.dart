@@ -15,21 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme:
             ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 27, 38, 73)),
         useMaterial3: true,
@@ -62,8 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Timer? t;
   IconData? icon;
 
-  final chosenMinutes = 2;
-  final chosenSeconds = 5;
+  var chosenMinutes = 2;
+  var chosenSeconds = 5;
 
   @override
   void initState() {
@@ -82,6 +67,11 @@ class _MyHomePageState extends State<MyHomePage> {
       stopwatch!.start();
       icon = Icons.pause;
     }
+  }
+
+  void setTimer(minutes, seconds) {
+    chosenMinutes = minutes;
+    chosenSeconds = seconds;
   }
 
   void _startTimer() {
@@ -163,12 +153,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SavedTimerButton(timer: "2:00"),
-                SavedTimerButton(timer: "1:30"),
-                SavedTimerButton(timer: "0:30")
+                ElevatedButton(
+                  onPressed: () {
+                    setTimer(1, 30);
+                  },
+                  child: Text("1:30"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setTimer(2, 0);
+                  },
+                  child: Text("2:0"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setTimer(1, 45);
+                  },
+                  child: Text("1:45"),
+                ),
               ],
             )
           ],
@@ -181,24 +186,16 @@ class _MyHomePageState extends State<MyHomePage> {
 class SavedTimerButton extends StatelessWidget {
   const SavedTimerButton({
     super.key,
-    required this.timer,
+    required this.minutes,
+    required this.seconds,
   });
-  final String timer;
+  final int minutes;
+  final int seconds;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onSecondary,
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text("$minutes:$seconds"),
     );
-    return Card(
-        color: theme.colorScheme.secondary,
-        elevation: 10,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-            timer,
-            style: style,
-          ),
-        ));
   }
 }
