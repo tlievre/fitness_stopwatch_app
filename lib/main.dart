@@ -1,11 +1,10 @@
-import 'dart:async';
 import 'package:fitness_stopwatch_app/timer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-      create: (context) => TimerModel(), child: const MyApp()));
+      create: (context) => TimerModel(1, 1), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -103,15 +102,24 @@ class MyHomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      timerModel.milliseconds =
+                          timerModel.convertInMilliseconds(1, 15);
+                    },
                     child: Text("1:15"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      timerModel.milliseconds =
+                          timerModel.convertInMilliseconds(1, 30);
+                    },
                     child: Text("1:30"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      timerModel.milliseconds =
+                          timerModel.convertInMilliseconds(2, 0);
+                    },
                     child: Text("2:00"),
                   ),
                 ],

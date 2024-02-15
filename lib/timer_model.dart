@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class TimerModel extends ChangeNotifier {
@@ -7,11 +6,11 @@ class TimerModel extends ChangeNotifier {
   IconData icon = Icons.play_arrow;
 
   // actual
-  static const int _milliseconds = 20000;
+  int _milliseconds = 20000;
 
   int _counter = 0;
 
-  bool isPaused = true;
+  bool _isPaused = true;
 
   int get seconds => _milliseconds ~/ 1000;
 
@@ -19,11 +18,22 @@ class TimerModel extends ChangeNotifier {
 
   int get remainingSeconds => _counter ~/ 1000;
 
-  TimerModel() {
+  int convertInMilliseconds(int minutes, int seconds) {
+    return minutes * 60000 + seconds * 1000;
+  }
+
+  set milliseconds(milliseconds) {
+    _milliseconds = milliseconds;
+    notifyListeners();
+  }
+
+  TimerModel(int minutes, int seconds) {
+    _milliseconds = convertInMilliseconds(minutes, seconds);
+
     t = Timer.periodic(const Duration(milliseconds: 1), (timer) {
       // This callback function check when the timer arrived to its end
 
-      if (!isPaused && _counter < _milliseconds) {
+      if (!_isPaused && (_counter < _milliseconds)) {
         _counter += 1;
       }
       notifyListeners();
@@ -31,11 +41,11 @@ class TimerModel extends ChangeNotifier {
   }
 
   void pauseTimer() {
-    if (isPaused) {
-      isPaused = false;
+    if (_isPaused) {
+      _isPaused = false;
       icon = Icons.pause;
     } else {
-      isPaused = true;
+      _isPaused = true;
       icon = Icons.play_arrow;
     }
     notifyListeners();
@@ -43,7 +53,7 @@ class TimerModel extends ChangeNotifier {
 
   void resetTimer() {
     _counter = 0;
-    isPaused = true;
+    _isPaused = true;
     icon = Icons.play_arrow;
     notifyListeners();
   }
