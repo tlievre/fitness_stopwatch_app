@@ -45,7 +45,7 @@ class TimerProvider extends ChangeNotifier {
       }
 
       if (_counter == _milliseconds) {
-        resetTimer();
+        resetTimer(resetSets: false);
         rotate();
       }
       notifyListeners();
@@ -63,10 +63,11 @@ class TimerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetTimer() {
+  void resetTimer({resetSets = true}) {
     _counter = 0;
     _isPaused = true;
     _icon = Icons.play_arrow;
+    if (resetSets) sets = [0, 0, 1];
     notifyListeners();
   }
 
