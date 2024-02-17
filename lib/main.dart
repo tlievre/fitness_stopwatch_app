@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => TimerProvider(1, 1),
+      create: (context) => TimerProvider(1, 1, 4),
       child: MaterialApp(
         title: 'Fitness Stopwatch App',
         theme: ThemeData(
@@ -32,17 +32,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displaySmall!.copyWith(
-      color: theme.colorScheme.onSecondary,
-    );
-
-    Color currentSet(int value) {
-      return (value == 1)
-          ? theme.colorScheme.primary
-          : theme.colorScheme.secondary;
-    }
-
     var timerProvider = context.watch<TimerProvider>();
     return Scaffold(
       appBar: AppBar(
@@ -53,35 +42,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Card(
-                  color: currentSet(timerProvider.sets[0]),
-                  elevation: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text("1", style: style),
-                  ),
-                ),
-                Card(
-                  color: currentSet(timerProvider.sets[1]),
-                  elevation: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text("2", style: style),
-                  ),
-                ),
-                Card(
-                  color: currentSet(timerProvider.sets[2]),
-                  elevation: 70,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text("3", style: style),
-                  ),
-                ),
-              ],
-            ),
+            const SetTrackerCards(),
             Container(
               height: 250,
               alignment: Alignment.center,
@@ -123,6 +84,47 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SetTrackerCards extends StatelessWidget {
+  const SetTrackerCards({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final style = theme.textTheme.displaySmall!.copyWith(
+      color: theme.colorScheme.onSecondary,
+    );
+
+    Color currentSet(int value) {
+      return (value == 1)
+          ? theme.colorScheme.primary
+          : theme.colorScheme.secondary;
+    }
+
+    var timerProvider = context.watch<TimerProvider>();
+
+    Row buildRowofCardWidgets() {
+      List<Widget> list = [];
+      for (final (index, cardValue) in timerProvider.sets.indexed) {
+        list.add(
+          Card(
+            color: currentSet(cardValue),
+            elevation: 70,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text((index + 1).toString(), style: style),
+            ),
+          ),
+        );
+      }
+      return Row(mainAxisAlignment: MainAxisAlignment.center, children: list);
+    }
+
+    return buildRowofCardWidgets();
   }
 }
 

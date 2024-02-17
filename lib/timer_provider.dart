@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class TimerProvider extends ChangeNotifier {
   late Timer t;
   late int _milliseconds;
+  late List<int> sets;
 
   int _counter = 0;
   bool _isPaused = true;
   IconData _icon = Icons.play_arrow;
 
-  var sets = [0, 0, 1];
-
+  //getters
   IconData get icon => _icon;
 
   int get seconds => _milliseconds ~/ 1000;
@@ -19,13 +19,15 @@ class TimerProvider extends ChangeNotifier {
 
   int get remainingSeconds => _counter ~/ 1000;
 
-  static int convertInMilliseconds(int minutes, int seconds) {
-    return minutes * 60000 + seconds * 1000;
-  }
-
+  //setters
   set milliseconds(milliseconds) {
     _milliseconds = milliseconds;
     notifyListeners();
+  }
+
+  //usefull public static public methods
+  static int convertInMilliseconds(int minutes, int seconds) {
+    return minutes * 60000 + seconds * 1000;
   }
 
   void rotate() {
@@ -34,8 +36,9 @@ class TimerProvider extends ChangeNotifier {
     }
   }
 
-  TimerProvider(int minutes, int seconds) {
+  TimerProvider(int minutes, int seconds, int numberSets) {
     _milliseconds = convertInMilliseconds(minutes, seconds);
+    sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
 
     t = Timer.periodic(const Duration(milliseconds: 1), (timer) {
       // This callback function check when the timer arrived to its end
@@ -67,7 +70,9 @@ class TimerProvider extends ChangeNotifier {
     _counter = 0;
     _isPaused = true;
     _icon = Icons.play_arrow;
-    if (resetSets) sets = [0, 0, 1];
+    if (resetSets) {
+      sets = List<int>.filled(sets.length - 1, 0, growable: true)..add(1);
+    }
     notifyListeners();
   }
 
