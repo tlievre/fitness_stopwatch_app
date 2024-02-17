@@ -13,12 +13,6 @@ class TimerProvider extends ChangeNotifier {
   //getters
   IconData get icon => _icon;
 
-  int get seconds => _milliseconds ~/ 1000;
-
-  int get minutes => seconds ~/ 60;
-
-  int get remainingSeconds => _counter ~/ 1000;
-
   //setters
   set milliseconds(milliseconds) {
     _milliseconds = milliseconds;
@@ -77,13 +71,13 @@ class TimerProvider extends ChangeNotifier {
   }
 
   String returnFormattedText() {
-    String milli = (-(_counter % 1000) % 1000)
+    String milli = ((_milliseconds - _counter) % 1000)
         .toString()
         .padLeft(3, "0"); // this one for the miliseconds
-    String sec = ((seconds - (_counter ~/ 1000)) % 60)
+    String sec = (((_milliseconds - _counter) ~/ 1000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
-    String min = ((seconds - remainingSeconds) ~/ 60)
+    String min = (((_milliseconds - _counter) ~/ 60000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
 
