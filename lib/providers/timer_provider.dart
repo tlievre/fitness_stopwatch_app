@@ -19,17 +19,6 @@ class TimerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //usefull public static public methods
-  static int convertInMilliseconds(int minutes, int seconds) {
-    return minutes * 60000 + seconds * 1000;
-  }
-
-  void rotate() {
-    if (sets.isNotEmpty) {
-      sets = sets.sublist(1)..addAll(sets.sublist(0, 1));
-    }
-  }
-
   TimerProvider(int minutes, int seconds, int numberSets) {
     _milliseconds = convertInMilliseconds(minutes, seconds);
     sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
@@ -47,6 +36,17 @@ class TimerProvider extends ChangeNotifier {
       }
       notifyListeners();
     });
+  }
+
+  //usefull public static public methods
+  static int convertInMilliseconds(int minutes, int seconds) {
+    return minutes * 60000 + seconds * 1000;
+  }
+
+  void rotate() {
+    if (sets.isNotEmpty) {
+      sets = sets.sublist(1)..addAll(sets.sublist(0, 1));
+    }
   }
 
   void pauseTimer() {
