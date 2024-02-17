@@ -23,11 +23,11 @@ class TimerProvider extends ChangeNotifier {
     _milliseconds = convertInMilliseconds(minutes, seconds);
     sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
 
-    t = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    t = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       // This callback function check when the timer arrived to its end
 
       if (!_isPaused && (_counter < _milliseconds)) {
-        _counter += 1;
+        _counter += 500;
       }
 
       if (_counter == _milliseconds) {
@@ -71,9 +71,9 @@ class TimerProvider extends ChangeNotifier {
   }
 
   String returnFormattedText() {
-    String milli = ((_milliseconds - _counter) % 1000)
-        .toString()
-        .padLeft(3, "0"); // this one for the miliseconds
+    // String milli = ((_milliseconds - _counter) % 1000)
+    //     .toString()
+    //     .padLeft(3, "0"); // this one for the miliseconds
     String sec = (((_milliseconds - _counter) ~/ 1000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
@@ -81,6 +81,6 @@ class TimerProvider extends ChangeNotifier {
         .toString()
         .padLeft(2, "0"); // this is for the second
 
-    return "$min:$sec:$milli";
+    return "$min:$sec";
   }
 }
