@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TimerProvider extends ChangeNotifier {
   late Timer t;
   late int _milliseconds;
-  late List<int> sets;
+  late List<int> sets; //this list enable to count sets of each exercice
 
   int _counter = 0;
   bool _isPaused = true;
@@ -19,8 +19,8 @@ class TimerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  TimerProvider(int minutes, int seconds, int numberSets) {
-    _milliseconds = convertInMilliseconds(minutes, seconds);
+  TimerProvider(int hours, int minutes, int seconds, int numberSets) {
+    _milliseconds = convertInMilliseconds(hours, minutes, seconds);
     sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
 
     t = Timer.periodic(const Duration(milliseconds: 500), (timer) {
@@ -39,10 +39,11 @@ class TimerProvider extends ChangeNotifier {
   }
 
   //usefull public static public methods
-  static int convertInMilliseconds(int minutes, int seconds) {
-    return minutes * 60000 + seconds * 1000;
+  static int convertInMilliseconds(int hours, int minutes, int seconds) {
+    return hours * 3600000 + minutes * 60000 + seconds * 1000;
   }
 
+  // Count remaining number of sets
   void rotate() {
     if (sets.isNotEmpty) {
       sets = sets.sublist(1)..addAll(sets.sublist(0, 1));
@@ -60,6 +61,7 @@ class TimerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // reset timer and the optionnaly the number of sets
   void resetTimer({resetSets = true}) {
     _counter = 0;
     _isPaused = true;
@@ -71,16 +73,16 @@ class TimerProvider extends ChangeNotifier {
   }
 
   String returnFormattedText() {
-    // String milli = ((_milliseconds - _counter) % 1000)
-    //     .toString()
-    //     .padLeft(3, "0"); // this one for the miliseconds
     String sec = (((_milliseconds - _counter) ~/ 1000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
     String min = (((_milliseconds - _counter) ~/ 60000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
+    String hours = (((_milliseconds - _counter) ~/ 3600000) % 60)
+        .toString()
+        .padLeft(2, "0"); // for hours
 
-    return "$min:$sec";
+    return "$hours:$min:$sec";
   }
 }
