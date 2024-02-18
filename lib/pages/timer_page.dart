@@ -1,0 +1,61 @@
+import 'package:fitness_stopwatch_app/widgets/quick_timer_button.dart';
+import 'package:fitness_stopwatch_app/widgets/set_tracker_cards.dart';
+import 'package:flutter/material.dart';
+import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
+import 'package:provider/provider.dart';
+
+class TimerPage extends StatelessWidget {
+  const TimerPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    var timerProvider = context.watch<TimerProvider>();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SetTrackerCards(),
+            Container(
+              height: 250,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape
+                    .circle, // this one is use for make the circle on ui.
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  width: 5,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    timerProvider.returnFormattedText(),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FloatingActionButton(
+                        onPressed: timerProvider.pauseTimer,
+                        tooltip: 'StartStop',
+                        child: Icon(timerProvider.icon),
+                      ),
+                      FloatingActionButton(
+                        onPressed: timerProvider.resetTimer,
+                        tooltip: 'reset',
+                        child: const Icon(Icons.restore),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const QuickTimerButton()
+          ],
+        ),
+      ),
+    );
+  }
+}
