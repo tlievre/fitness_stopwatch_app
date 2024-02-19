@@ -1,4 +1,5 @@
 import 'package:fitness_stopwatch_app/providers/theme_provider.dart';
+import 'package:fitness_stopwatch_app/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,9 +17,7 @@ class ParameterPage extends StatelessWidget {
           Switch(
             value: isDarkMode,
             onChanged: (isOn) {
-              isOn
-                  ? themeProvider.toggleTheme(ThemeMode.light)
-                  : themeProvider.toggleTheme(ThemeMode.dark);
+              isOn ? themeProvider.toggleTheme() : themeProvider.toggleTheme();
             },
           ),
         ],
