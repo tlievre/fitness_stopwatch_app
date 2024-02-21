@@ -1,16 +1,21 @@
-# fitness_stopwatch_app
+# Fitness_stopwatch_app ⏱️
 
-A new Flutter project.
+Simple timer Mobile App flutter implementation.
 
-## Getting Started
+## Setup
 
-This project is a starting point for a Flutter application.
+Follow official [Flutter get-started tutorial](https://docs.flutter.dev/get-started/install).
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## To implement
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Scrolling Figures widget to setup timer and save new Quick Buttons
+- Refactor parameter page and add routes
+
+## References
+
+https://docs.flutter.dev/get-started/install
+
+https://medium.com/@yujitoshi/how-to-create-a-timer-app-with-flutter-riverpod-mvc-ec941d87cef9
+
+https://loveandroid.medium.com/timer-page-using-provider-in-flutter-aa9234eed80d
