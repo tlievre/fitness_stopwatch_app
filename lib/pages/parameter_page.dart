@@ -1,5 +1,4 @@
 import 'package:fitness_stopwatch_app/providers/theme_provider.dart';
-import 'package:fitness_stopwatch_app/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,7 @@ class ParameterPage extends StatelessWidget {
     var themeProvider = context.watch<ThemeProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dark theme'),
+        title: const Text('Dark theme'),
         actions: <Widget>[
           Switch(
             value: isDarkMode,
