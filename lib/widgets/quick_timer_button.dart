@@ -15,24 +15,27 @@ class QuickTimerButton extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
+            timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds =
                 TimerProvider.convertInMilliseconds(0, 5);
           },
-          child: Text("0:5"),
+          child: const Text("0:5"),
         ),
         ElevatedButton(
           onPressed: () {
+            timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds =
                 TimerProvider.convertInMilliseconds(1, 30);
           },
-          child: Text("1:30"),
+          child: const Text("1:30"),
         ),
         ElevatedButton(
           onPressed: () {
+            timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds =
                 TimerProvider.convertInMilliseconds(2, 0);
           },
-          child: Text("2:00"),
+          child: const Text("2:00"),
         ),
       ],
     );

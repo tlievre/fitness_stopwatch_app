@@ -9,6 +9,7 @@ void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => TimerProvider(70, 1, 3)),
     ChangeNotifierProvider(create: (context) => ThemeProvider())
+    // ignore: prefer_const_constructors
   ], child: MyApp()));
 }
 
