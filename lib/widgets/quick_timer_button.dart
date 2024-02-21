@@ -16,21 +16,21 @@ class QuickTimerButton extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(0, 0, 5);
+                TimerProvider.convertInMilliseconds(0, 5);
           },
           child: Text("0:5"),
         ),
         ElevatedButton(
           onPressed: () {
             timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(0, 1, 30);
+                TimerProvider.convertInMilliseconds(1, 30);
           },
           child: Text("1:30"),
         ),
         ElevatedButton(
           onPressed: () {
             timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(0, 2, 0);
+                TimerProvider.convertInMilliseconds(2, 0);
           },
           child: Text("2:00"),
         ),
