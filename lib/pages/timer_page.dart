@@ -1,5 +1,6 @@
 import 'package:fitness_stopwatch_app/widgets/quick_timer_button.dart';
 import 'package:fitness_stopwatch_app/widgets/set_tracker_cards.dart';
+import 'package:fitness_stopwatch_app/widgets/timer_circle_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
 import 'package:provider/provider.dart';
@@ -16,18 +17,10 @@ class TimerPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SetTrackerCards(),
-            Container(
-              height: 250,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                shape: BoxShape
-                    .circle, // this one is use for make the circle on ui.
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  width: 5,
-                ),
-              ),
-              child: Column(
+            const SizedBox(height: 10),
+            Stack(alignment: Alignment.center, children: [
+              const TimerCircleProgressBar(),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -51,8 +44,9 @@ class TimerPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            const QuickTimerButton()
+            ]),
+            const SizedBox(height: 10),
+            const QuickTimerButton(),
           ],
         ),
       ),

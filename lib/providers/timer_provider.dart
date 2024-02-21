@@ -13,14 +13,16 @@ class TimerProvider extends ChangeNotifier {
   //getters
   IconData get icon => _icon;
 
+  double get progressPourcentage => (_milliseconds - _counter) / _milliseconds;
+
   //setters
   set milliseconds(milliseconds) {
     _milliseconds = milliseconds;
     notifyListeners();
   }
 
-  TimerProvider(int hours, int minutes, int seconds, int numberSets) {
-    _milliseconds = convertInMilliseconds(hours, minutes, seconds);
+  TimerProvider(int minutes, int seconds, int numberSets) {
+    _milliseconds = convertInMilliseconds(minutes, seconds);
     sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
 
     t = Timer.periodic(const Duration(milliseconds: 500), (timer) {
@@ -39,8 +41,8 @@ class TimerProvider extends ChangeNotifier {
   }
 
   //usefull public static public methods
-  static int convertInMilliseconds(int hours, int minutes, int seconds) {
-    return hours * 3600000 + minutes * 60000 + seconds * 1000;
+  static int convertInMilliseconds(int minutes, int seconds) {
+    return minutes * 60000 + seconds * 1000;
   }
 
   // Count remaining number of sets
@@ -79,10 +81,6 @@ class TimerProvider extends ChangeNotifier {
     String min = (((_milliseconds - _counter) ~/ 60000) % 60)
         .toString()
         .padLeft(2, "0"); // this is for the second
-    String hours = (((_milliseconds - _counter) ~/ 3600000) % 60)
-        .toString()
-        .padLeft(2, "0"); // for hours
-
-    return "$hours:$min:$sec";
+    return "$min:$sec";
   }
 }
