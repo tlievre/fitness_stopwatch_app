@@ -5,6 +5,7 @@ class TimerProvider extends ChangeNotifier {
   late Timer t;
   late int _milliseconds;
   late List<int> sets; //this list enable to count sets of each exercice
+  late int _setNumber;
 
   int _counter = 0;
   bool _isPaused = true;
@@ -15,15 +16,23 @@ class TimerProvider extends ChangeNotifier {
 
   double get progressPourcentage => (_milliseconds - _counter) / _milliseconds;
 
+  int get setNumber => _setNumber;
+
   //setters
   set milliseconds(milliseconds) {
     _milliseconds = milliseconds;
     notifyListeners();
   }
 
+  void setNewNumberSets(int numberSets) {
+    sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
+    _setNumber = numberSets;
+  }
+
   TimerProvider(int minutes, int seconds, int numberSets) {
     _milliseconds = convertInMilliseconds(minutes, seconds);
     sets = List<int>.filled(numberSets - 1, 0, growable: true)..add(1);
+    _setNumber = numberSets;
 
     t = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       // This callback function check when the timer arrived to its end

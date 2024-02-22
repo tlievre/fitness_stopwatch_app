@@ -1,5 +1,7 @@
 import 'package:fitness_stopwatch_app/providers/theme_provider.dart';
+import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
 class ParameterPage extends StatelessWidget {
@@ -9,15 +11,34 @@ class ParameterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     var themeProvider = context.watch<ThemeProvider>();
+    var timerProvider = context.watch<TimerProvider>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dark theme'),
-        actions: <Widget>[
-          Switch(
-            value: isDarkMode,
-            onChanged: (isOn) {
-              isOn ? themeProvider.toggleTheme() : themeProvider.toggleTheme();
-            },
+      appBar: AppBar(title: const Text('Parameter')),
+      body: ListView(
+        children: [
+          ListTile(
+            leading: Icon(Icons.dark_mode, size: 72),
+            title: Text('Dark mode'),
+            trailing: Switch(
+              value: isDarkMode,
+              onChanged: (isOn) {
+                isOn
+                    ? themeProvider.toggleTheme()
+                    : themeProvider.toggleTheme();
+              },
+            ),
+            contentPadding: EdgeInsets.all(20),
+          ),
+          ListTile(
+            leading: Icon(Icons.replay, size: 72),
+            title: Text('Sets number'),
+            trailing: NumberPicker(
+              value: timerProvider.setNumber,
+              minValue: 1,
+              maxValue: 4,
+              onChanged: (value) => timerProvider.setNewNumberSets(value),
+            ),
+            contentPadding: EdgeInsets.all(20),
           ),
         ],
       ),
