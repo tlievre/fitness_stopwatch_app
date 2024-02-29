@@ -1,5 +1,6 @@
 import 'package:fitness_stopwatch_app/providers/theme_provider.dart';
 import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
+import 'package:fitness_stopwatch_app/widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,8 @@ class ParameterPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Parameter')),
       body: ListView(
         children: [
-          ListTile(
+          CustomListTile(
+            height: 100,
             leading: Icon(Icons.dark_mode, size: 72),
             title: Text('Dark mode'),
             trailing: Switch(
@@ -27,9 +29,9 @@ class ParameterPage extends StatelessWidget {
                     : themeProvider.toggleTheme();
               },
             ),
-            contentPadding: EdgeInsets.all(20),
           ),
-          ListTile(
+          CustomListTile(
+            height: 250,
             leading: Icon(Icons.replay, size: 72),
             title: Text('Sets number'),
             trailing: NumberPicker(
@@ -38,7 +40,6 @@ class ParameterPage extends StatelessWidget {
               maxValue: 4,
               onChanged: (value) => timerProvider.setNewNumberSets(value),
             ),
-            contentPadding: EdgeInsets.all(20),
           ),
         ],
       ),

@@ -19,3 +19,7 @@ https://docs.flutter.dev/get-started/install
 https://medium.com/@yujitoshi/how-to-create-a-timer-app-with-flutter-riverpod-mvc-ec941d87cef9
 
 https://loveandroid.medium.com/timer-page-using-provider-in-flutter-aa9234eed80d
+
+**Custom listTile widgets :**
+
+https://blog.stackademic.com/how-to-increase-the-height-of-listtile-in-flutter-e430dc577113
