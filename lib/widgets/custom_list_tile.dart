@@ -53,6 +53,8 @@ class CustomListTile extends StatelessWidget {
                   // Column layout for title and subtitle
                   crossAxisAlignment:
                       CrossAxisAlignment.start, // Align text left
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // align text center
                   children: [
                     title ?? const SizedBox(), // Display title or empty space
                     const SizedBox(

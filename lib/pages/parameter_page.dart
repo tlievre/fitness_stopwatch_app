@@ -19,7 +19,7 @@ class ParameterPage extends StatelessWidget {
         children: [
           CustomListTile(
             height: 100,
-            leading: Icon(Icons.dark_mode, size: 72),
+            leading: Icon(Icons.dark_mode, size: 50),
             title: Text('Dark mode'),
             trailing: Switch(
               value: isDarkMode,
@@ -32,7 +32,7 @@ class ParameterPage extends StatelessWidget {
           ),
           CustomListTile(
             height: 250,
-            leading: Icon(Icons.replay, size: 72),
+            leading: Icon(Icons.replay, size: 50),
             title: Text('Sets number'),
             trailing: NumberPicker(
               value: timerProvider.setNumber,
