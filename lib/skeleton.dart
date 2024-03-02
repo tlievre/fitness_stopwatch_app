@@ -7,29 +7,53 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void handleClick(int item) {
+      if (item == 1) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ParameterPage()),
+        );
+      }
+    }
+
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Fitness App'),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.timer),
-              ),
-              Tab(
-                icon: Icon(Icons.settings),
-              ),
-            ],
-          ),
-        ),
-        body: const TabBarView(
-          children: <Widget>[
-            TimerPage(),
-            ParameterPage(),
+          // bottom: const TabBar(
+          //   tabs: <Widget>[
+          //     Tab(
+          //       icon: Icon(Icons.timer),
+          //     ),
+          //     Tab(
+          //       icon: Icon(Icons.settings),
+          //     ),
+          //   ],
+          // ),
+          actions: <Widget>[
+            PopupMenuButton<int>(
+              onSelected: (item) => handleClick(item),
+              itemBuilder: (context) => <PopupMenuEntry<int>>[
+                const PopupMenuItem<int>(
+                  value: 1,
+                  child: ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text('Settings'),
+                  ),
+                )
+              ],
+            )
           ],
         ),
+        body: const TimerPage(),
+        // body: const TabBarView(
+        //   children: <Widget>[
+        //     TimerPage(),
+        //     ParameterPage(),
+        //   ],
+        // ),
       ),
     );
   }

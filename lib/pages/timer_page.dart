@@ -31,11 +31,13 @@ class TimerPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton(
+                        heroTag: null,
                         onPressed: timerProvider.pauseTimer,
                         tooltip: 'StartStop',
                         child: Icon(timerProvider.icon),
                       ),
                       FloatingActionButton(
+                        heroTag: null,
                         onPressed: timerProvider.resetTimer,
                         tooltip: 'reset',
                         child: const Icon(Icons.restore),
