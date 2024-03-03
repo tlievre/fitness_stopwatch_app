@@ -14,7 +14,7 @@ class ParameterPage extends StatelessWidget {
     var themeProvider = context.watch<ThemeProvider>();
     var timerProvider = context.watch<TimerProvider>();
     return Scaffold(
-      appBar: AppBar(title: const Text('Parameter')),
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         children: [
           CustomListTile(
