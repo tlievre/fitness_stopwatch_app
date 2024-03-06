@@ -1,3 +1,4 @@
+import 'package:fitness_stopwatch_app/providers/button_provider.dart';
 import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -11,6 +12,7 @@ class QuickTimerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var timerProvider = context.watch<TimerProvider>();
+    var buttonProvider = context.watch<ButtonProvider>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -23,8 +25,8 @@ class QuickTimerButton extends StatelessWidget {
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
-            timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(0, 5);
+            timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
+                buttonProvider.minutes, buttonProvider.seconds);
           },
           child: const Text("0:5"),
         ),
@@ -37,8 +39,8 @@ class QuickTimerButton extends StatelessWidget {
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
-            timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(1, 30);
+            timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
+                buttonProvider.minutes, buttonProvider.seconds);
           },
           child: const Text("1:30"),
         ),
@@ -62,7 +64,7 @@ class QuickTimerButton extends StatelessWidget {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
-  int value = 1;
+  var button = context.watch<ButtonProvider>();
   return AlertDialog(
     title: const Text('Set timer shortcut'),
     content: Column(
@@ -72,17 +74,17 @@ Widget _buildPopupDialog(BuildContext context) {
         Row(
           children: [
             NumberPicker(
-              value: value,
+              value: button.minutes,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => print(value),
+              onChanged: (value) => button.minutes(value),
             ),
             const Text(":"),
             NumberPicker(
-              value: value,
+              value: button.seconds,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => print(value),
+              onChanged: (value) => button.seconds(value),
             ),
           ],
         ),
