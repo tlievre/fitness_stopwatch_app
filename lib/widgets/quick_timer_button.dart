@@ -1,4 +1,4 @@
-import 'package:fitness_stopwatch_app/providers/button_provider.dart';
+import 'package:fitness_stopwatch_app/providers/quick_timer_button_provider.dart';
 import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -12,7 +12,8 @@ class QuickTimerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var timerProvider = context.watch<TimerProvider>();
-    var buttonProvider = context.watch<ButtonProvider>();
+    var quickTimerButtonProvider = context.watch<QuickTimerButtonProvider>();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -26,9 +27,10 @@ class QuickTimerButton extends StatelessWidget {
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
-                buttonProvider.minutes, buttonProvider.seconds);
+                quickTimerButtonProvider.minutes,
+                quickTimerButtonProvider.seconds);
           },
-          child: const Text("0:5"),
+          child: Text(quickTimerButtonProvider.returnFormattedText()),
         ),
         ElevatedButton(
           onLongPress: () {
@@ -40,9 +42,10 @@ class QuickTimerButton extends StatelessWidget {
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
-                buttonProvider.minutes, buttonProvider.seconds);
+                quickTimerButtonProvider.minutes,
+                quickTimerButtonProvider.seconds);
           },
-          child: const Text("1:30"),
+          child: Text(quickTimerButtonProvider.returnFormattedText()),
         ),
         ElevatedButton(
           onLongPress: () {
@@ -53,10 +56,11 @@ class QuickTimerButton extends StatelessWidget {
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
-            timerProvider.milliseconds =
-                TimerProvider.convertInMilliseconds(2, 0);
+            timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
+                quickTimerButtonProvider.minutes,
+                quickTimerButtonProvider.seconds);
           },
-          child: const Text("2:00"),
+          child: Text(quickTimerButtonProvider.returnFormattedText()),
         ),
       ],
     );
@@ -64,7 +68,7 @@ class QuickTimerButton extends StatelessWidget {
 }
 
 Widget _buildPopupDialog(BuildContext context) {
-  var button = context.watch<ButtonProvider>();
+  var button = context.watch<QuickTimerButtonProvider>();
   return AlertDialog(
     title: const Text('Set timer shortcut'),
     content: Column(
@@ -77,14 +81,14 @@ Widget _buildPopupDialog(BuildContext context) {
               value: button.minutes,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => button.minutes(value),
+              onChanged: (value) => button.minutes = value,
             ),
             const Text(":"),
             NumberPicker(
               value: button.seconds,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => button.seconds(value),
+              onChanged: (value) => button.seconds = value,
             ),
           ],
         ),

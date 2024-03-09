@@ -1,3 +1,4 @@
+import 'package:fitness_stopwatch_app/providers/quick_timer_button_provider.dart';
 import 'package:fitness_stopwatch_app/providers/timer_provider.dart';
 import 'package:fitness_stopwatch_app/skeleton.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,8 @@ import 'providers/theme_provider.dart';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => TimerProvider(70, 1, 3)),
-    ChangeNotifierProvider(create: (context) => ThemeProvider())
+    ChangeNotifierProvider(create: (context) => ThemeProvider()),
+    ChangeNotifierProvider(create: (context) => QuickTimerButtonProvider())
     // ignore: prefer_const_constructors
   ], child: MyApp()));
 }
