@@ -9,8 +9,8 @@ Follow official [Flutter get-started tutorial](https://docs.flutter.dev/get-star
 
 ## To implement
 
-- Scrolling Figures widget to setup timer and save new Quick Buttons
-- Refactor parameter page and add routes
+- Scrolling Figures widget to setup timer
+- Fix widget instanciation pattern design (see quick timer button widget [_buildPopupDialog]).
 
 ## References
 
