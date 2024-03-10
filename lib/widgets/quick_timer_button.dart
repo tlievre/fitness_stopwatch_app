@@ -21,54 +21,57 @@ class QuickTimerButton extends StatelessWidget {
           onLongPress: () {
             showDialog(
               context: context,
-              builder: (BuildContext context) => _buildPopupDialog(context),
+              builder: (BuildContext context) => _buildPopupDialog(context, 0),
             );
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
-                quickTimerButtonProvider.minutes,
-                quickTimerButtonProvider.seconds);
+                quickTimerButtonProvider.quickTimer[0].minutes,
+                quickTimerButtonProvider.quickTimer[0].seconds);
           },
-          child: Text(quickTimerButtonProvider.returnFormattedText()),
+          child: Text(
+              quickTimerButtonProvider.quickTimer[0].returnFormattedText()),
         ),
         ElevatedButton(
           onLongPress: () {
             showDialog(
               context: context,
-              builder: (BuildContext context) => _buildPopupDialog(context),
+              builder: (BuildContext context) => _buildPopupDialog(context, 1),
             );
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
-                quickTimerButtonProvider.minutes,
-                quickTimerButtonProvider.seconds);
+                quickTimerButtonProvider.quickTimer[1].minutes,
+                quickTimerButtonProvider.quickTimer[1].seconds);
           },
-          child: Text(quickTimerButtonProvider.returnFormattedText()),
+          child: Text(
+              quickTimerButtonProvider.quickTimer[1].returnFormattedText()),
         ),
         ElevatedButton(
           onLongPress: () {
             showDialog(
               context: context,
-              builder: (BuildContext context) => _buildPopupDialog(context),
+              builder: (BuildContext context) => _buildPopupDialog(context, 2),
             );
           },
           onPressed: () {
             timerProvider.resetTimer(resetSets: false);
             timerProvider.milliseconds = TimerProvider.convertInMilliseconds(
-                quickTimerButtonProvider.minutes,
-                quickTimerButtonProvider.seconds);
+                quickTimerButtonProvider.quickTimer[2].minutes,
+                quickTimerButtonProvider.quickTimer[2].seconds);
           },
-          child: Text(quickTimerButtonProvider.returnFormattedText()),
+          child: Text(
+              quickTimerButtonProvider.quickTimer[2].returnFormattedText()),
         ),
       ],
     );
   }
 }
 
-Widget _buildPopupDialog(BuildContext context) {
-  var button = context.watch<QuickTimerButtonProvider>();
+Widget _buildPopupDialog(BuildContext context, int i) {
+  var quickTimerButtonProvider = context.watch<QuickTimerButtonProvider>();
   return AlertDialog(
     title: const Text('Set timer shortcut'),
     content: Column(
@@ -78,17 +81,19 @@ Widget _buildPopupDialog(BuildContext context) {
         Row(
           children: [
             NumberPicker(
-              value: button.minutes,
+              value: quickTimerButtonProvider.quickTimer[i].minutes,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => button.minutes = value,
+              onChanged: (value) =>
+                  quickTimerButtonProvider.setMinutes(value, i),
             ),
             const Text(":"),
             NumberPicker(
-              value: button.seconds,
+              value: quickTimerButtonProvider.quickTimer[i].seconds,
               minValue: 0,
               maxValue: 60,
-              onChanged: (value) => button.seconds = value,
+              onChanged: (value) =>
+                  quickTimerButtonProvider.setSeconds(value, i),
             ),
           ],
         ),

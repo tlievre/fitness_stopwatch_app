@@ -1,26 +1,20 @@
+import 'package:fitness_stopwatch_app/models/quick_timer.dart';
 import 'package:flutter/material.dart';
 
 class QuickTimerButtonProvider extends ChangeNotifier {
-  int _minutes = 1;
-  int _seconds = 30;
+  List<QuickTimer> quickTimer = [
+    QuickTimer(0, 5),
+    QuickTimer(1, 30),
+    QuickTimer(2, 0)
+  ];
 
-  get minutes => _minutes;
-
-  get seconds => _seconds;
-
-  set minutes(min) {
-    _minutes = min;
+  void setMinutes(min, quickTimerIndex) {
+    quickTimer[quickTimerIndex].minutes = min;
     notifyListeners();
   }
 
-  set seconds(sec) {
-    _seconds = sec;
+  void setSeconds(sec, quickTimerIndex) {
+    quickTimer[quickTimerIndex].seconds = sec;
     notifyListeners();
-  }
-
-  String returnFormattedText() {
-    String formatedMinutes = _minutes.toString().padLeft(2, "0");
-    String formatedSeconds = _seconds.toString().padLeft(2, "0");
-    return "$formatedMinutes:$formatedSeconds";
   }
 }
